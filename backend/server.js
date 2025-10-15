@@ -88,5 +88,5 @@ app.get("/api/caleb-stats", async (_req, res) => {
 
 // ====== START SERVER ======
 app.listen(PORT, () => {
-  console.log(`✅ Backend running at http://localhost:${PORT}`);
+  console.log(`✅ Backend running on port ${PORT}`);
 });
