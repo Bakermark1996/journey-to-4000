@@ -35,8 +35,8 @@ function updateProgressBar(yards) {
   progressBar.textContent = `${yards.toLocaleString()} / ${GOAL.toLocaleString()} (${pct.toFixed(1)}%)`;
 }
 
-function updateStatsFromData(apiJson) {
-  const categories = apiJson?.statistics?.splits?.categories;
+function updateStatsFromData(data) {
+  const categories = data?.data?.statistics?.splits?.categories;
   if (!Array.isArray(categories)) {
     console.warn("No categories in API JSON");
     return;
@@ -55,7 +55,7 @@ function updateStatsFromData(apiJson) {
   const rushYards             = getStatValue(categories, "rushing", "rushingYards");
   const rushTD                = getStatValue(categories, "rushing", "rushingTouchdowns");
   const rushAttempts          = getStatValue(categories, "rushing", "rushingAttempts");
-  const rushYardsPer          = getStatValue(categories, "rushing", "yardsPerCarry");
+  const rushYardsPer          = getStatValue(categories, "rushing", "yardsPerRushAttempt");
 
   // Update DOM (guard each in case the element isn't present yet)
   if (passingYardsEl)       passingYardsEl.innerHTML       = `<strong>Yards:</strong> ${passingYardsValue.toLocaleString()}`;
