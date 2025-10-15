@@ -1,5 +1,6 @@
 // --- CONFIG ---
-const url = "http://localhost:3000/api/caleb-stats"; // absolute during local dev
+const API_BASE = "https://journey-to-4000.onrender.com";
+const url = `${API_BASE}/api/caleb-stats`;
 const options = { method: "GET", cache: "no-store" };
 const GOAL = 4000;
 
