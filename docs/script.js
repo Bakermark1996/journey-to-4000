@@ -83,7 +83,7 @@ async function fetchPlayerStats() {
     // If backend cache is missing, server returns 503
     if (res.status === 503) {
       console.warn("Cache missing. Triggering refresh...");
-      await fetch(`${backendBaseUrl}/api/refresh`); // hit refresh endpoint
+      await fetch(`${API_BASE}/api/refresh`); // hit refresh endpoint
       await new Promise(resolve => setTimeout(resolve, 1500)); // wait ~1.5s for cache to write
 
       // Try again after refresh
