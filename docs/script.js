@@ -30,11 +30,6 @@ function getStatValue(categories, categoryName, statName) {
   return stat?.value ?? 0;
 }
 
-// --- UPDATE PROGRESS BAR CLASS ---
-progressBar.classList.add("loading");
-progressBar.style.width = "0%";
-progressBar.textContent = "";
-
 function updateProgressBar(yards) {
   const pct = Math.min((yards / GOAL) * 100, 100);
   progressBar.classList.remove("loading");
