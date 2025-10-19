@@ -1,7 +1,13 @@
 html{
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+}
+
+h1, h2, h3, .caleb, .nav-link {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 body {
@@ -239,6 +245,21 @@ body {
   animation: shimmer 1.2s infinite;
 }
 
+/* Fade-in effect for stat values */
+.stat-value {
+  transition: color 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+}
+
+.stat-value.loading {
+  color: transparent !important;
+  opacity: 0.5; /* faint while shimmering */
+}
+
+.stat-value.loaded {
+  opacity: 1;
+}
+
 .stats-2024 {
     display: flex;
     justify-content: space-around;
@@ -346,6 +367,34 @@ body {
   .caleb-image {
     width: 90%;
   }
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+  font-size: 16px;
+  color: #0B162A;
+  border-top: 2px solid #e14002;
+  background: #f8f9fa;
+}
+
+.footer-line {
+  margin: 6px 0;
+  font-weight: bold;
+}
+
+.site-footer a {
+  color: #e14002;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+  color: #0B162A;
+  transition: color 0.25s ease;
 }
 
 /* Small phones (under 480px) */
