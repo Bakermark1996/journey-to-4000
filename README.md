@@ -1,35 +1,44 @@
 # 🏈 Journey to 4,000
 
-**Journey to 4,000** is a personal web project that tracks Chicago Bears quarterback **Caleb Williams’ journey to 4,000 passing yards** in the NFL.  
-The Bears have never had a 4,000-yard passer — this project visualizes Caleb’s progress in real-time with a dynamic progress bar, live stats, and historical comparisons.
+**Journey to 4,000** is a personal web project that tracks Chicago Bears quarterback **Caleb Williams' journey to 4,000 passing yards** in a single NFL season. The Chicago Bears are the only NFL franchise that has **never had a 4,000-yard passer** — this site visualizes Caleb's attempt to be the first.
+
+The project features **live stat updates, caching, a dynamic progress bar, mobile-friendly UI**, and automated weekly data refreshes.
 
 ---
 
 ## 🚀 Features
 
-- **Dynamic Stats Update:** Pulls Caleb Williams’ live season stats from an NFL API.
-- **Progress Bar Visualization:** Shows real-time progress toward 4,000 passing yards.
-- **Weekly Auto-Caching:** Node.js backend fetches fresh data every Tuesday at midnight (Pacific Time) and caches locally to save API calls.
-- **Historical Stats:** 2024 season stats displayed statically.
-- **Top 10 Franchise Leaders:** Automatically ranks Bears QBs once Caleb enters the top 10 list.
+- **Live Stat Updates** – Pulls Caleb Williams’ season stats from a RapidAPI NFL endpoint.
+- **Progress Bar Tracking** – Visualizes progress toward 4,000 yards.
+- **Weekly Auto-Caching** – Backend fetches stats every **Tuesday at 12:00 AM PT** and serves a cached JSON file to reduce API usage.
+- **Frontend Shimmer Loading Effects** – ESPN-style skeleton UI while data loads.
+- **Mobile Responsive** – Hamburger menu, responsive typography, and adaptive layout.
+- **Fallback Logic** – If cache is missing, frontend auto-recovers by triggering a refresh.
+- **2024 Stats Reference** – Static historical comparison while Caleb builds his first full season.
+
+> 📝 **Coming Soon**: Top 10 Bears Passing Leaders Section (B)
 
 ---
 
 ## 🗂️ Project Structure
 
 journey-to-4000/
-├── frontend/
-│ ├── index.html # Main webpage
-│ ├── styles.css # Visual design
-│ └── script.js # Frontend logic + API calls
-├── backend/
-│ ├── server.js # Node.js server with caching + API routes
-│ ├── data/
-│ │ └── bears-leaders.json # Static Bears top 10 passing yard list
-│ ├── cache/
-│ │ └── caleb.json # Auto-generated weekly cache file
-│ ├── .env # Private API keys (ignored by Git)
+├── backend/ # Secured Node.js API + cache
+│ ├── server.js # Express server + API routes
+│ ├── data/ # (future static leaderboard data)
+│ ├── cache/ # caleb.json saved here (ignored by Git)
+│ ├── .env # RapidAPI keys (not committed)
 │ └── package.json
+│
+├── docs/ # GitHub Pages frontend (public website)
+│ ├── index.html # Main webpage UI
+│ ├── styles.css # Styling + responsive design
+│ └── script.js # Frontend logic + API calls
+│
+├── .github/
+│ └── workflows/
+│ └── weekly-refresh.yml # GitHub Actions cron (Tues @ midnight PT)
+│
 ├── .gitignore
 └── README.md
 
@@ -38,76 +47,85 @@ journey-to-4000/
 
 ## 🧰 Technologies Used
 
-- **Frontend:** HTML, CSS, JavaScript (Vanilla)
-- **Backend:** Node.js, Express.js
-- **API:** [RapidAPI NFL API Data](https://rapidapi.com/Creativesdev/api/nfl-api-data)
-- **Cron Jobs:** `node-cron` for automatic weekly updates
-- **Environment Variables:** `dotenv` to secure private API keys
-- **CORS & Fetch:** For safe local API integration
+**Frontend:** HTML, CSS, JavaScript  
+**Backend:** Node.js, Express  
+**API:** RapidAPI — NFL API Data  
+**Automation:** GitHub Actions (scheduled weekly refresh)  
+**Deployment:** GitHub Pages (frontend) + Render (backend)  
+**Security:** `.env` for API keys, CORS-restricted backend
 
 ---
 
-## ⚙️ Setup Instructions (Local)
+## ⚙️ Local Development Setup
 
-### 1. Clone the repository
+1. **Clone the repository**
 ```bash
 git clone https://github.com/<YOUR_USERNAME>/journey-to-4000.git
 cd journey-to-4000/backend
 
-2. Install dependencies
+Install server dependencies
+
 npm install
 
-3. Add your environment variables
 
-Create a .env file inside /backend:
+Create a .env file
 
 RAPIDAPI_KEY=your_api_key_here
 RAPIDAPI_HOST=nfl-api-data.p.rapidapi.com
 PORT=3000
 
-4. Start the server
+
+Start backend
+
 npm start
 
 
-The backend will run at http://localhost:3000
+Running at:
+http://localhost:3000
 
-5. Open the frontend
-
-Open frontend/index.html in your browser (or use a local Live Server extension).
+Open frontend
+Open docs/index.html in your browser
+(or use VS Code's Live Server extension)
 
 🌐 Deployment
+Layer	Service
+Frontend	GitHub Pages
+Backend	Render (free tier)
+Cron (Weekly Refresh)	GitHub Actions
 
-Frontend: GitHub Pages
+After deployment, your frontend should call:
 
-Backend: Render, Railway, or Vercel (Node environment required)
+https://<YOUR_BACKEND>.onrender.com/api/caleb-stats
 
-Once deployed:
+🕒 Auto-Caching Behavior
 
-Update script.js to point to your live backend URL (e.g. https://journey-to-4000.onrender.com/api/caleb-stats).
+GitHub Actions triggers /api/refresh every Tuesday @ 00:00 PT
 
-🕒 Auto Caching
+Backend writes backend/cache/caleb.json
 
-The backend automatically refreshes Caleb’s stats every Tuesday at midnight (Pacific Time) via node-cron.
-If the API fails, the cached version remains active until the next refresh.
+Frontend always reads from /api/caleb-stats
+
+If cache is missing, frontend triggers a one-time recovery refresh
 
 🐻 Future Enhancements
 
-Add per-game stat charting
+Top 10 Bears Passing Leaders
 
-Historical comparison by week
+Weekly Yardage Chart
 
-Live score updates during Bears games
+Historical Stats vs Franchise Average
 
-Player milestone alerts (e.g. 1,000, 2,000, 3,000 yards)
+Dark Mode
+
+Mobile Home-Screen “App” Mode (PWA)
 
 👤 Author
 
 Mark Baker
-IT professional & Bears fan 🐻⬇️
-Bakermark1996@gmail.com
-https://github.com/Bakermark1996
+GitHub: https://github.com/bakermark1996
+🐻⬇️ Bear Down!
 
 ⚠️ Disclaimer
 
 This project is for personal and educational use only.
-Data provided by RapidAPI’s NFL Data API.
+All NFL data is retrieved from third-party APIs via RapidAPI.
