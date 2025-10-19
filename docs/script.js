@@ -4,6 +4,11 @@ const url = `${API_BASE}/api/caleb-stats`;
 const options = { method: "GET", cache: "no-store" };
 const GOAL = 4000;
 
+// --- STATS SHIMMERS ---
+document.querySelectorAll(".stat-value").forEach(el => {
+  el.classList.add("loading");
+});
+
 // --- DOM HOOKS ---
 const progressBar = document.querySelector(".progress-bar");
 
@@ -73,7 +78,28 @@ function updateStatsFromData(data) {
   if (rushingAttempts)      rushingAttempts.innerHTML      = `<strong>Attempts:</strong> ${rushAttempts}`;
   if (yardsPerCarry)        yardsPerCarry.innerHTML        = `<strong>Yards per Attempt:</strong> ${rushYardsPer.toFixed(1)}`;
 
+  document.querySelectorAll(".stat-value").forEach(el => {
+    el.classList.remove("loading");
+  });
+
   updateProgressBar(passingYardsValue);
+  const lastUpdatedEl = document.getElementById("last-updated");
+  const fetchedAt = data.fetchedAt;
+
+  if (fetchedAt) {
+    const date = new Date(fetchedAt);
+    lastUpdatedEl.textContent = `Last Updated: ${date.toLocaleString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZoneName: "short"
+    })}`;
+  } else {
+    lastUpdatedEl.textContent = "";
+  }
 }
 
 // --- FETCH & INIT ---
