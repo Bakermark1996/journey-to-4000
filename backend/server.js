@@ -8,6 +8,10 @@ import { fileURLToPath } from "url";
 
 dotenv.config();
 
+await fs.rm(CACHE_FILE, { force: true });
+console.log("🗑️ Cache deleted on startup (temporary)");
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
