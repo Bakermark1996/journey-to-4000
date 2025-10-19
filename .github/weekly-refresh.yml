@@ -1,0 +1,15 @@
+name: Weekly Caleb Stats Refresh
+
+on:
+  schedule:
+    - cron: '0 8 * * 2'  # Every Tuesday at 00:00 PST (08:00 UTC)
+  workflow_dispatch:      # allows manual triggering from GitHub Actions tab
+
+jobs:
+  refresh-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Render refresh endpoint
+        run: |
+          curl -s https://journey-to-4000.onrender.com/api/refresh
+  
