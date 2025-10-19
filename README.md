@@ -21,7 +21,7 @@ The project features **live stat updates, caching, a dynamic progress bar, mobil
 ---
 
 ## 🗂️ Project Structure
-
+```
 journey-to-4000/
 ├── backend/ # Secured Node.js API + cache
 │ ├── server.js # Express server + API routes
@@ -42,7 +42,7 @@ journey-to-4000/
 ├── .gitignore
 └── README.md
 
-
+```
 ---
 
 ## 🧰 Technologies Used
