@@ -68,6 +68,19 @@ app.get("/api/refresh", async (_req, res) => {
   }
 });
 
+// ===== DEV ONLY: Delete cache for testing frontend fallback =====
+app.post("/api/dev-delete-cache", async (_req, res) => {
+  try {
+    await fs.rm(CACHE_FILE, { force: true });
+    console.log("🗑️ Cache file deleted for testing.");
+    res.json({ deleted: true });
+  } catch (err) {
+    console.error("❌ Error deleting cache:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // ===== Start server =====
 app.listen(PORT, () => {
   console.log(`✅ Backend running on port ${PORT}`);
