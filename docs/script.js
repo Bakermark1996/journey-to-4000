@@ -79,14 +79,31 @@ function updateStatsFromData(data) {
 async function fetchPlayerStats() {
   try {
     const res = await fetch(url, options);
+
+    // If backend cache is missing, server returns 503
+    if (res.status === 503) {
+      console.warn("Cache missing. Triggering refresh...");
+      await fetch(`${backendBaseUrl}/api/refresh`); // hit refresh endpoint
+      await new Promise(resolve => setTimeout(resolve, 1500)); // wait ~1.5s for cache to write
+
+      // Try again after refresh
+      const retry = await fetch(url, options);
+      if (!retry.ok) throw new Error(`HTTP ${retry.status}`);
+      const retryData = await retry.json();
+      updateStatsFromData(retryData);
+      return;
+    }
+
+    // Normal path — cache exists
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();        // if server returns raw API JSON
-    // const { data } = await res.json();  // if server wraps { data, fetchedAt }
+    const data = await res.json();
     updateStatsFromData(data);
+
   } catch (err) {
     console.error("Error fetching player stats:", err);
   }
 }
+
 
 document.addEventListener("DOMContentLoaded", fetchPlayerStats);
 
