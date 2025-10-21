@@ -425,6 +425,34 @@ body {
   margin-top: 10px;
 }
 
+/* ===== FOOTER ===== */
+.site-footer {
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+  font-size: 16px;
+  color: #0B162A;
+  border-top: 2px solid #e14002;
+  background: #f8f9fa;
+}
+
+.footer-line {
+  margin: 6px 0;
+  font-weight: bold;
+}
+
+.site-footer a {
+  color: #e14002;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+  color: #0B162A;
+  transition: color 0.25s ease;
+}
+
 /* ========== MOBILE OPTIMIZATIONS ========== */
 
 /* Large tablets and smaller laptops */
@@ -454,6 +482,7 @@ body {
 @media (max-width: 768px) {
     :root {
     --nav-height: 140px;
+    --progress-offset: 4px;
   }
 
   .menu-bar {
@@ -510,34 +539,6 @@ body {
   .caleb-image {
     width: 90%;
   }
-}
-
-/* ===== FOOTER ===== */
-.site-footer {
-  text-align: center;
-  padding: 20px 10px;
-  margin-top: 40px;
-  font-size: 16px;
-  color: #0B162A;
-  border-top: 2px solid #e14002;
-  background: #f8f9fa;
-}
-
-.footer-line {
-  margin: 6px 0;
-  font-weight: bold;
-}
-
-.site-footer a {
-  color: #e14002;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-  color: #0B162A;
-  transition: color 0.25s ease;
 }
 
 /* Small phones (under 480px) */
@@ -685,7 +686,7 @@ body {
   }
 
   .nav-links.active {
-    max-height: 300px; /* Enough space for your 3 links */
+    max-height: 310px; /* Enough space for your 3 links */
     opacity: 1;
     border-bottom-color: #e14002;
   }
