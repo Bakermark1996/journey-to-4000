@@ -1,3 +1,9 @@
+:root {
+  --nav-height: 100px;        /* adjust to match your actual navbar height */
+  --progress-offset: 10px;    /* spacing between nav and progress bar */
+}
+
+
 html{
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -18,15 +24,14 @@ body {
 .container {
     width: 100%;
     margin: auto;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .menu {
     background: #0B162A;
     color: #ffffff;
-    padding: 48px 0;
+    padding: 22px 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky;
     top: 0;
     z-index: 1000;
     border-bottom: 4px solid #e14002;
@@ -61,14 +66,43 @@ body {
     padding-left: 15px;
 }
 
+/* === Sticky Navbar === */
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.menu.sticky-active {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25); /* STY-3 shadow */
+}
+
+/* === Leaderboard Button (NS-B style) === */
+.leaderboard-btn {
+  border: 2px solid #e14002;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.leaderboard-btn:hover {
+  background: #e14002;
+  color: white;
+  transition: 0.25s ease;
+}
+
 .progress-container {
     width: 100%;
     background-color: #e0e0e0;
     border-radius: 25px;
-    overflow: hidden;
+    overflow: visible;
     height: 50px;
     margin: 20px 0;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--progress-offset));
+    z-index: 999;
 }
 
 .progress-bar {
@@ -418,6 +452,10 @@ body {
 
 /* Tablets and large phones (portrait) */
 @media (max-width: 768px) {
+    :root {
+    --nav-height: 140px;
+  }
+
   .menu-bar {
     flex-direction: column;
     text-align: center;

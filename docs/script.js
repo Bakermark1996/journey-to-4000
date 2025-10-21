@@ -174,6 +174,33 @@ function updateStatsFromData(data) {
   buildLeaderboard(categories);
 }
 
+// === Smooth Scroll for Navbar Links ===
+document.querySelectorAll('.nav-link').forEach(link => {
+  const targetId = link.getAttribute('href');
+  if (targetId && targetId.startsWith('#')) {
+    link.addEventListener('click', function (e) {
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('nav-links').classList.remove('open'); // close on mobile
+      }
+    });
+  }
+});
+
+// === Sticky Scroll Effects ===
+const nav = document.querySelector('.menu');
+const progressContainer = document.querySelector('.progress-container');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 10) {
+    nav.classList.add('sticky-active');
+  } else {
+    nav.classList.remove('sticky-active');
+  }
+});
+
 // --- FETCH & INIT ---
 async function fetchPlayerStats() {
   try {
