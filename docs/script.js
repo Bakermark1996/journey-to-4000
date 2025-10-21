@@ -37,7 +37,7 @@ function getStatValue(categories, categoryName, statName) {
 
 async function buildLeaderboard(categories) {
   try {
-    const res = await fetch(`${backendBaseUrl}/api/bears-leaders`);
+    const res = await fetch(`${API_BASE}/api/bears-leaders`);
     if (!res.ok) throw new Error(`Leaders HTTP ${res.status}`);
     const base = await res.json(); // array of {player, season, yards}
 
