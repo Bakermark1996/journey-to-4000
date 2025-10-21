@@ -68,6 +68,18 @@ app.get("/api/refresh", async (_req, res) => {
   }
 });
 
+app.get("/api/bears-leaders", async (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, "data", "bears-leaders.json");
+    const text = await fs.readFile(filePath, "utf8");
+    const leaders = JSON.parse(text);
+    res.json(leaders);
+  } catch (err) {
+    console.error("❌ Error reading bears-leaders.json:", err);
+    res.status(500).json({ error: "Failed to load leaders" });
+  }
+});
+
 // ===== Start server =====
 app.listen(PORT, () => {
   console.log(`✅ Backend running on port ${PORT}`);

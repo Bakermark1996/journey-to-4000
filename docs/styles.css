@@ -131,6 +131,27 @@ body {
   font-style: italic;
 }
 
+/* ==== ON PACE TRACKER ==== */
+.on-pace {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+/* Color states */
+.on-pace.ahead {
+  color: #28a745; /* green */
+}
+
+.on-pace.behind {
+  color: #e67e22; /* orange */
+}
+
+.on-pace.bad {
+  color: #c0392b; /* red */
+}
 
 .title {
     text-align: center;
@@ -285,6 +306,90 @@ body {
   box-shadow: 0 0 10px rgba(225, 64, 2, 0.4);
 }
 
+/* ===== LEADERBOARD ===== */
+.header-leaders {
+  font-size: 48px;
+  color: #0B162A;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 4px;
+  text-decoration-color: #e14002;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.leaders-section {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+}
+
+.leaders-table-wrapper {
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  border: 1px solid #e6e6e6;
+}
+
+.leaders-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.leaders-table thead th {
+  background: #0B162A;
+  color: #fff;
+  text-align: left;
+  padding: 14px 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.leaders-table tbody td {
+  padding: 12px;
+  border-top: 1px solid #eee;
+  font-weight: 600;
+  color: #222;
+}
+
+.leaders-table tbody tr:nth-child(even) td {
+  background: #fafafa;
+}
+
+.leaders-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Highlight Caleb (HL-C + 🔥) */
+.leaders-table tr.highlight-caleb td {
+  background: #0B162A;
+  color: #fff;
+  font-weight: 800;
+  border-top-color: #0B162A;
+}
+
+.leaders-table tr.highlight-caleb td .player-name::before {
+  content: "🔥 ";
+}
+
+.leaders-table tr.highlight-caleb td.season,
+.leaders-table tr.highlight-caleb td.num {
+  color: #fff;
+}
+
+/* Note under table (when Caleb is outside top 10) */
+.leaders-note {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
 
 /* ========== MOBILE OPTIMIZATIONS ========== */
 

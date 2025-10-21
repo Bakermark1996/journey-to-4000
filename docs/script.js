@@ -35,6 +35,63 @@ function getStatValue(categories, categoryName, statName) {
   return stat?.value ?? 0;
 }
 
+async function buildLeaderboard(categories) {
+  try {
+    const res = await fetch(`${backendBaseUrl}/api/bears-leaders`);
+    if (!res.ok) throw new Error(`Leaders HTTP ${res.status}`);
+    const base = await res.json(); // array of {player, season, yards}
+
+    // Current Caleb season from the API data you already parsed:
+    const calebYards = getStatValue(categories, "passing", "passingYards");
+    const currentSeason = 2025; // adjust if needed programmatically
+    const calebCurrent = { player: "Caleb Williams", season: currentSeason, yards: calebYards };
+
+    // Merge: remove any existing 2025 Caleb entry just in case, then add current
+    const merged = base.filter(e => !(e.player === "Caleb Williams" && e.season === currentSeason));
+    merged.push(calebCurrent);
+
+    // Sort by yards (desc) and take Top 10
+    merged.sort((a, b) => b.yards - a.yards);
+    const top10 = merged.slice(0, 10);
+
+    // Determine Caleb's rank in the *full* sorted list (not only top10)
+    const fullSorted = [...merged]; // already sorted
+    const calebRank = fullSorted.findIndex(e => e.player === "Caleb Williams" && e.season === currentSeason) + 1;
+
+    renderLeaderboard(top10, calebCurrent, calebRank);
+  } catch (err) {
+    console.error("Error building leaderboard:", err);
+  }
+}
+
+function renderLeaderboard(rows, calebEntry, calebRank) {
+  const tbody = document.getElementById("leaders-body");
+  const note = document.getElementById("leaders-note");
+  tbody.innerHTML = "";
+
+  rows.forEach((r, idx) => {
+    const tr = document.createElement("tr");
+    const isCaleb = r.player === calebEntry.player && r.season === calebEntry.season;
+
+    if (isCaleb) tr.classList.add("highlight-caleb");
+
+    tr.innerHTML = `
+      <td>${idx + 1}</td>
+      <td><span class="player-name">${r.player}</span></td>
+      <td class="season">${r.season}</td>
+      <td class="num">${r.yards.toLocaleString()}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // If Caleb is outside the Top 10, show a note
+  if (calebRank > 10) {
+    note.textContent = `Caleb Williams is currently at #${calebRank} with ${calebEntry.yards.toLocaleString()} yards — not yet in the Top 10.`;
+  } else {
+    note.textContent = "";
+  }
+}
+
 function updateProgressBar(yards) {
   const pct = Math.min((yards / GOAL) * 100, 100);
   progressBar.classList.remove("loading");
@@ -100,6 +157,28 @@ function updateStatsFromData(data) {
   } else {
     lastUpdatedEl.textContent = "";
   }
+
+    // === ON PACE TRACKER ===
+  const onPaceEl = document.getElementById("on-pace");
+  const goal = 4000;
+
+  const yards = getStatValue(categories, "passing", "passingYards");
+  const games = getStatValue(categories, "general", "gamesPlayed");
+  const projected = Math.round((yards / games) * 17);
+
+  onPaceEl.classList.remove("ahead", "behind", "bad");
+
+  if (projected >= goal) {
+    onPaceEl.classList.add("ahead");
+    onPaceEl.textContent = `🔥 On Pace for ${projected.toLocaleString()} yards — ahead of 4,000-yard pace!`;
+  } else if (projected >= 3800) {
+    onPaceEl.classList.add("behind");
+    onPaceEl.textContent = `⚠️ On Pace for ${projected.toLocaleString()} yards — slightly behind the 4,000-yard pace.`;
+  } else {
+    onPaceEl.classList.add("bad");
+    onPaceEl.textContent = `❌ On Pace for ${projected.toLocaleString()} yards — below the 4,000-yard pace.`;
+  }
+  buildLeaderboard(categories);
 }
 
 // --- FETCH & INIT ---
