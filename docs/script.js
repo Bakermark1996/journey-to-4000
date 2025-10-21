@@ -83,13 +83,6 @@ function renderLeaderboard(rows, calebEntry, calebRank) {
     `;
     tbody.appendChild(tr);
   });
-
-  // If Caleb is outside the Top 10, show a note
-  if (calebRank > 10) {
-    note.textContent = `Caleb Williams is currently at #${calebRank} with ${calebEntry.yards.toLocaleString()} yards — not yet in the Top 10.`;
-  } else {
-    note.textContent = "";
-  }
 }
 
 function updateProgressBar(yards) {
